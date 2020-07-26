@@ -18,7 +18,7 @@ variable "ibm_region" {
 
 variable "resource_group_name" {
   description = "Name of IBM Cloud Resource Group used for all VPC resources"
-  default     = "VPC-admin"
+  default     = "Default"
 }
 
 # #Only tested with Gen2. Gen1 requires changes to images, profile names and some VPC resources 
@@ -30,7 +30,7 @@ variable "resource_group_name" {
 # unique name for the VPC in the account 
 variable "vpc_name" {
   description = "Name of vpc"
-  default     = "shallcrm-ssh-bastion-host"
+  default     = "ssh-bastion-host"
 }
 
 ##############################################################################
@@ -110,7 +110,6 @@ data "ibm_is_ssh_key" "sshkey" {
 }
 
 variable "ssh_key_name" {
-  description = "Name giving to public SSH key uploaded to IBM Cloud for VSI access"
-  default = "shallcrm-ibmcloud-pwless-gen2"
+  description = "Name given to public SSH key uploaded to IBM Cloud for VSI access"
 }
 
