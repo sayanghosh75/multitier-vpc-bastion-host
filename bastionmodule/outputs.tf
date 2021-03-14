@@ -19,3 +19,4 @@ output "security_group_id" {
 output "bastion_subnet_ids" {
   value = ibm_is_subnet.bastion_subnet.*.id
 }
+

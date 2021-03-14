@@ -11,24 +11,24 @@ variable "ibm_is_resource_group_id" {
 
 variable "ibm_region" {
   description = "IBM Cloud region where all resources will be deployed"
-  default     = "us-south"
+  default     = "au-syd"
 }
 
-# VSI compute profile for webserver host
-variable "profile" {
-}
+# # VSI compute profile for webserver host
+# variable "profile" {
+# }
 
-# Id of VSI image 
-variable "ibm_is_image_id" {
-}
+# # Id of VSI image 
+# variable "ibm_is_image_id" {
+# }
 
-# SSH key for frontend webservers. 
-variable "ibm_is_ssh_key_id" {
-}
+# # SSH key for frontend webservers. 
+# variable "ibm_is_ssh_key_id" {
+# }
 
-# webserver instance is put in this subnet
-variable "subnet_ids" {
-}
+# # webserver instance is put in this subnet
+# variable "subnet_ids" {
+# }
 
 # bastion sg requiring access to frontend security group
 variable "bastion_remote_sg_id" {
@@ -48,4 +48,11 @@ variable "pub_repo_egress_cidr" {
 variable "frontend_count" {
   description = "number of front end zones"
   default     = 1
+}
+
+# Public gateway IDs
+variable "public_gateway_ids" {
+}
+
+variable "frontend_cidr_blocks" {
 }

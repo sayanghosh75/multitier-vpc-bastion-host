@@ -4,8 +4,9 @@
 
 # target region
 variable "ibm_region" {
-  description = "IBM Cloud region where all resources will be deployed"
-  default     = "us-south"
+  description = "IBM Cloud region where all VPC resources will be deployed"
+  default     = "au-syd"
+  # default     = "us-south"
   # default     = "us-east"
   # default     = "eu-gb"
 }
@@ -17,7 +18,7 @@ variable "ibm_region" {
 
 
 variable "resource_group_name" {
-  description = "Name of IBM Cloud Resource Group used for all VPC resources"
+  description = "Name of IBM Cloud resource group to be used for all VPC resources"
   default     = "Default"
 }
 
@@ -29,8 +30,8 @@ variable "resource_group_name" {
 
 # unique name for the VPC in the account 
 variable "vpc_name" {
-  description = "Name of vpc"
-  default     = "ssh-bastion-host"
+  description = "Name of VPC"
+  default     = "shallcrm-vpc"
 }
 
 ##############################################################################
@@ -59,57 +60,57 @@ locals {
 # to create individual zone subnets for use with `ibm_is_address_prefix`
 variable "bastion_cidr" {
   description = "Complete CIDR range across all three zones for bastion host subnets"
-  default     = "172.22.192.0/20"
+  default     = "172.16.0.0/20"
 }
 
 variable "frontend_cidr" {
   description = "Complete CIDR range across all three zones for frontend subnets"
-  default     = "172.16.0.0/20"
+  default     = "172.17.0.0/20"
 }
 
 variable "backend_cidr" {
   description = "Complete CIDR range across all three zones for backend subnets"
-  default     = "172.17.0.0/20"
+  default     = "172.18.0.0/20"
 }
 
 
-##############################################################################
+# ##############################################################################
 
-# VSI profile
-variable "profile" {
-  description = "Profile for VSIs deployed in frontend and backend"
-  default     = "cx2-2x4"
-}
+# # VSI profile
+# variable "profile" {
+#   description = "Profile for VSIs deployed in frontend and backend"
+#   default     = "cx2-2x4"
+# }
 
-# image names can be determined with the cli command `ibmcloud is images`
-variable "image_name" {
-  description = "OS image for VSI deployments. Only tested with Centos"
-  default     = "ibm-centos-7-6-minimal-amd64-2"
-}
+# # image names can be determined with the cli command `ibmcloud is images`
+# variable "image_name" {
+#   description = "OS image for VSI deployments. Only tested with Centos"
+#   default     = "ibm-centos-7-6-minimal-amd64-2"
+# }
 
-data "ibm_is_image" "os" {
-  name = var.image_name
-}
+# data "ibm_is_image" "os" {
+#   name = var.image_name
+# }
 
 
-##############################################################################
-# Access check variables
-##############################################################################
+# ##############################################################################
+# # Access check variables
+# ##############################################################################
 
-variable "ssh_accesscheck" {
-  description = "Flag to request remote-exec validation of SSH access, true/false"
-  default     = false
-}
+# variable "ssh_accesscheck" {
+#   description = "Flag to request remote-exec validation of SSH access, true/false"
+#   default     = false
+# }
 
-variable "ssh_private_key" {
-  description = "SSH private key of SSH key pair used for VSIs and Bastion"
-}
+# variable "ssh_private_key" {
+#   description = "SSH private key of SSH key pair used for VSIs and Bastion"
+# }
 
-data "ibm_is_ssh_key" "sshkey" {
-  name = var.ssh_key_name
-}
+# data "ibm_is_ssh_key" "sshkey" {
+#   name = var.ssh_key_name
+# }
 
-variable "ssh_key_name" {
-  description = "Name given to public SSH key uploaded to IBM Cloud for VSI access"
-}
+# variable "ssh_key_name" {
+#   description = "Name given to public SSH key uploaded to IBM Cloud for VSI access"
+# }
 

@@ -1,0 +1,18 @@
+{
+  "registry.terraform.io/hashicorp/external": {
+    "hash": "h1:wbtDfLeawmv6xVT1W0w0fctRCb4ABlaD3JTxwb1jXag=",
+    "version": "2.1.0"
+  },
+  "registry.terraform.io/hashicorp/random": {
+    "hash": "h1:BZMEPucF+pbu9gsPk0G0BHx7YP04+tKdq2MrRDF1EDM=",
+    "version": "3.1.0"
+  },
+  "registry.terraform.io/hashicorp/template": {
+    "hash": "h1:94qn780bi1qjrbC3uQtjJh3Wkfwd5+tTtJHOb7KTg9w=",
+    "version": "2.2.0"
+  },
+  "registry.terraform.io/ibm-cloud/ibm": {
+    "hash": "h1:7UKkMm8IeZhoA1cOoi9FHdj19owzrm3ShR3v5b/eCCs=",
+    "version": "1.21.1"
+  }
+}

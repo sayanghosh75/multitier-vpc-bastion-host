@@ -24,6 +24,11 @@ variable "unique_id" {
   description = "The vpc unique id"
 }
 
+variable "bastion_count" {
+  description = "number of bastion zones"
+  default     = 1
+}
+
 
 variable "frontend_count" {
   description = "number of front end zones"
@@ -38,6 +43,9 @@ variable "backend_count" {
 ##############################################################################
 # Network variables
 ##############################################################################
+
+variable "bastion_cidr_blocks" {
+}
 
 variable "frontend_cidr_blocks" {
 }

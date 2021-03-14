@@ -14,21 +14,21 @@ variable "ibm_region" {
   default     = "us-south"
 }
 
-# VSI compute profile for webserver host
-variable "profile" {
-}
+# # VSI compute profile for webserver host
+# variable "profile" {
+# }
 
-# Id of VSI image 
-variable "ibm_is_image_id" {
-}
+# # Id of VSI image 
+# variable "ibm_is_image_id" {
+# }
 
-# SSH key for backend webservers. 
-variable "ibm_is_ssh_key_id" {
-}
+# # SSH key for backend webservers. 
+# variable "ibm_is_ssh_key_id" {
+# }
 
-# webserver instance is put in this subnet
-variable "subnet_ids" {
-}
+# # webserver instance is put in this subnet
+# variable "subnet_ids" {
+# }
 
 variable "app_frontend_sg_id" {
 }
@@ -48,4 +48,11 @@ variable "pub_repo_egress_cidr" {
 variable "backend_count" {
   description = "number of back end zones"
   default     = 1
+}
+
+# Public gateway IDs
+variable "public_gateway_ids" {
+}
+
+variable "backend_cidr_blocks" {
 }

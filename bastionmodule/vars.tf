@@ -17,29 +17,29 @@ variable "ibm_is_resource_group_id" {
 # Bastion host VSI variables
 ##############################################################################
 
-# VSI compute profile for bastion host
-variable "vsi_profile" {
-  default = "cx2-2x4"
-}
+# # VSI compute profile for bastion host
+# variable "vsi_profile" {
+#   default = "cx2-2x4"
+# }
 
-# VSI image name
-variable "image_name" {
-  description = "Bastion host config scripts have only been tested with Centos"
-  default     = "ibm-centos-7-6-minimal-amd64-1"
-}
+# # VSI image name
+# variable "image_name" {
+#   description = "Bastion host config scripts have only been tested with Centos"
+#   default     = "ibm-centos-7-6-minimal-amd64-1"
+# }
 
-data "ibm_is_image" "os" {
-  name = var.image_name
-}
+# data "ibm_is_image" "os" {
+#   name = var.image_name
+# }
 
-variable "ssh_key_id" {
-  description = "ID of IBM Cloud SSH key to be used for bastion host"
-}
+# variable "ssh_key_id" {
+#   description = "ID of IBM Cloud SSH key to be used for bastion host"
+# }
 
 # 
 variable "ibm_region" {
   description = "IBM Cloud region where all resources will be deployed"
-  default     = "us-south"
+  default     = "au-syd"
 }
 
 # variable "az_list" {
@@ -88,4 +88,8 @@ variable "extrarules" {
     #["allow", "0.0.0.0/0", "0.0.0.0/0", "inbound", "tcp", 1024, 65535, 22, 22],
     #["allow", "0.0.0.0/0", "0.0.0.0/0", "outbound", "tcp", 22, 22, 1024, 65535]
   ]
+}
+
+
+variable "bastion_cidr_blocks" {
 }

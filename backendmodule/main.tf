@@ -13,69 +13,33 @@
 #######################################################################################
 
 
-resource "ibm_is_instance" "backend-server" {
-  count   = var.backend_count
-  name    = "${var.unique_id}-backend-vsi-${count.index + 1}"
-  image   = var.ibm_is_image_id
-  profile = var.profile
-
-  primary_network_interface {
-    subnet          = var.subnet_ids[count.index]
-    security_groups = [ibm_is_security_group.backend.id]
-  }
-
-  vpc            = var.ibm_is_vpc_id
-  zone           = "${var.ibm_region}-${count.index % 3 + 1}"
-  resource_group = var.ibm_is_resource_group_id
-  keys           = [var.ibm_is_ssh_key_id]
-  user_data      = data.template_cloudinit_config.app_userdata.rendered
-  tags           = ["schematics:group:backend"]
+resource "ibm_is_vpc_address_prefix" "backend_subnet_prefix" {
+  count = var.backend_count
+  name  = "${var.unique_id}-backend-prefix-zone-${count.index + 1}"
+  zone  = "${var.ibm_region}-${count.index % 3 + 1}"
+  vpc   = var.ibm_is_vpc_id
+  cidr  = var.backend_cidr_blocks[count.index]
 }
 
 
-##############################################################################
-# Private load balancer
-# 
-##############################################################################
 
 
-# resource "ibm_is_lb" "webapptier-lb" {
-#   name    = "backapptier"
-#   type    = "private"
-#   subnets = toset(var.subnet_ids)
-# resource_group = var.ibm_is_resource_group_id
-# }
 
 
-# resource "ibm_is_lb_listener" "webapptier-lb-listener" {
-#   lb           = ibm_is_lb.webapptier-lb.id
-#   port         = "80"
-#   protocol     = "http"
-#   default_pool = element(split("/", ibm_is_lb_pool.webapptier-lb-pool.id), 1)
-#   depends_on   = [ibm_is_lb_pool.webapptier-lb-pool]
-# }
 
-# resource "ibm_is_lb_pool" "webapptier-lb-pool" {
-#   lb                 = ibm_is_lb.webapptier-lb.id
-#   name               = "webapptier-lb-pool"
-#   protocol           = "http"
-#   algorithm          = "round_robin"
-#   health_delay       = "5"
-#   health_retries     = "2"
-#   health_timeout     = "2"
-#   health_type        = "http"
-#   health_monitor_url = "/"
-#   depends_on         = [ibm_is_lb.webapptier-lb]
-# }
+# Increase count to create subnets in all zones
+resource "ibm_is_subnet" "backend_subnet" {
+  count           = var.backend_count
+  name            = "${var.unique_id}-backend-subnet-${count.index + 1}"
+  vpc             = var.ibm_is_vpc_id
+  zone            = "${var.ibm_region}-${count.index % 3 + 1}"
+  ipv4_cidr_block = var.backend_cidr_blocks[count.index]
+  #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
+  # public_gateway = var.public_gateway_ids[count.index].id
+  depends_on     = [ibm_is_vpc_address_prefix.backend_subnet_prefix]
+}
 
-# resource "ibm_is_lb_pool_member" "webapptier-lb-pool-member-zone1" {
-#   count          = var.backend_count
-#   lb             = ibm_is_lb.webapptier-lb.id
-#   pool           = element(split("/", ibm_is_lb_pool.webapptier-lb-pool.id), 1)
-#   port           = "8080"
-#   target_address = ibm_is_instance.backend-server[count.index].primary_network_interface[0].primary_ipv4_address
-#   depends_on     = [ibm_is_lb_pool.webapptier-lb-pool]
-# }
+
 
 
 
