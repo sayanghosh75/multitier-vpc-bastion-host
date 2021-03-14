@@ -15,20 +15,14 @@
 # other VPC configurations  
 ##############################################################################
 
-
-
-
-
+# Create floating IP address in each zone
 resource "ibm_is_floating_ip" "bastion" {
   count  = var.bastion_count
   name   = "${var.unique_id}-float-bastion-ip-${count.index + 1}"
   zone   = "${var.ibm_region}-${count.index % 3 + 1}"
 }
 
-
-
-# Define individual subnets for address_prefix
-
+# Create VPC address prefix for bastion subnets
 resource "ibm_is_vpc_address_prefix" "bast_subnet_prefix" {
   count = var.bastion_count
   name  = "${var.unique_id}-bastion-prefix-zone-${count.index + 1}"
@@ -37,11 +31,7 @@ resource "ibm_is_vpc_address_prefix" "bast_subnet_prefix" {
   cidr  = var.bastion_cidr_blocks[count.index]
 }
 
-
-
-
-
-# Single subnet for singe zone bastion
+# Create bastion subnets in requested number of zones
 resource "ibm_is_subnet" "bastion_subnet" {
   count           = var.bastion_count
   name            = "${var.unique_id}-bastion-subnet-${count.index + 1}"
@@ -52,7 +42,3 @@ resource "ibm_is_subnet" "bastion_subnet" {
   network_acl     = ibm_is_network_acl.bastion_acl.id
   depends_on      = [ibm_is_vpc_address_prefix.bast_subnet_prefix]
 }
-
-
-
-

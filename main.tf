@@ -68,7 +68,7 @@ module "bastion" {
   unique_id                = var.vpc_name
   ibm_is_vpc_id            = module.vpc.vpc_id
   ibm_is_resource_group_id = data.ibm_resource_group.all_rg.id
-  bastion_cidr             = var.bastion_cidr
+  # bastion_cidr             = var.bastion_cidr
   bastion_cidr_blocks      = local.bastion_cidr_blocks
   ssh_source_cidr_blocks   = local.bastion_ingress_cidr
   destination_cidr_blocks  = [var.frontend_cidr, var.backend_cidr]
