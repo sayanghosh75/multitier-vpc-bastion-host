@@ -19,7 +19,7 @@ variable "ibm_region" {
 
 variable "resource_group_name" {
   description = "Name of IBM Cloud resource group to be used for all VPC resources"
-  default     = "VPC-Admin"
+  default     = "VPC-admin"
 }
 
 # #Only tested with Gen2. Gen1 requires changes to images, profile names and some VPC resources 
@@ -88,9 +88,6 @@ variable "backend_count" {
   description = "Number of back end zones"
   default     = 1
 }
-
-
-
 
 
 # ##############################################################################
