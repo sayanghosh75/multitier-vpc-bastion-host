@@ -8,8 +8,6 @@
 ##############################################################################
 
 
-
-
 # Generate rules for limiting access to SSH public source subnets/CIDRs 
 # and IBM Cloud private destination subnets/CIDRs
 locals {
@@ -59,8 +57,8 @@ locals {
     ["deny", "0.0.0.0/0", "0.0.0.0/0", "outbound", "all", 1, 65535, 1, 65535],
   ]
 
-  #concatinate all sources of rules
-  # max rules is 25, focus is on denying external traffic access to subnets in case of SG misconfiguration
+  # Concatenate all sources of rules
+  # Max rules is 25, focus is on denying external traffic access to subnets in case of SG misconfiguration
   rules = concat(var.extrarules, local.destrules, local.sourcerules, local.baserules)
 
   mappedrules = [
@@ -70,7 +68,7 @@ locals {
 }
 
 
-# merge in random names of rules 
+# Merge in random names of rules 
 resource "random_string" "uuid" {
   count   = length(local.rules)
   special = false

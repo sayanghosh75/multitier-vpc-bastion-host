@@ -1,43 +1,46 @@
-variable "unique_id" {
-} # string added to the front for all created resources
+##############################################################################
+# Backend subnet module input variables
+##############################################################################
 
-# create resources in this vpc id
+# Unique string added to the front of all created resource names
+variable "unique_id" {
+} 
+
+# Create resources in this vpc id
 variable "ibm_is_vpc_id" {
 }
 
-# create resources in this resource group id
+# Create resources in this resource group id
 variable "ibm_is_resource_group_id" {
 }
 
 variable "ibm_region" {
   description = "IBM Cloud region where all resources will be deployed"
-  default     = "us-south"
+  default     = "au-syd"
 }
 
-# # VSI compute profile for webserver host
-# variable "profile" {
-# }
+# Backend CIDR blocks for each zone
+variable "backend_cidr_blocks" {
+}
 
-# # Id of VSI image 
-# variable "ibm_is_image_id" {
-# }
+variable "backend_count" {
+  description = "Number of back end zones"
+  default     = 1
+}
 
-# # SSH key for backend webservers. 
-# variable "ibm_is_ssh_key_id" {
-# }
+# Public gateways to be attached to backend subnets
+variable "public_gateway_ids" {
+}
 
-# # webserver instance is put in this subnet
-# variable "subnet_ids" {
-# }
-
+# Frontend SG requiring access to backend security group
 variable "app_frontend_sg_id" {
 }
 
-# bastion sg requiring access to backend security group
+# Bastion SG requiring access to backend security group
 variable "bastion_remote_sg_id" {
 }
 
-# bastion subnet CIDR requiring access to backend subnets 
+# Bastion subnet CIDR requiring access to backend subnets - Not sure this is needed if we instead allow bastion security group
 variable "bastion_subnet_CIDR" {
 }
 
@@ -45,14 +48,3 @@ variable "bastion_subnet_CIDR" {
 variable "pub_repo_egress_cidr" {
 }
 
-variable "backend_count" {
-  description = "number of back end zones"
-  default     = 1
-}
-
-# Public gateway IDs
-variable "public_gateway_ids" {
-}
-
-variable "backend_cidr_blocks" {
-}

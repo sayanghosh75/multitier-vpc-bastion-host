@@ -1,3 +1,9 @@
+##############################################################################
+# Bastion Module
+#
+# Sample module to deploy a 'bastion' subnet and security group  
+# No NACL is defined. 
+##############################################################################
 
 ##############################################################################
 # This file creates the Bastion host, subnet and security group. NACL and

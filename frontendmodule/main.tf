@@ -1,22 +1,13 @@
 ##############################################################################
-# Sample module to deploy a 'frontend' webserver VSI and security group  
+# Frontend Module
+#
+# Sample module to deploy a 'frontend' subnet and security group  
 # No NACL is defined. As no floating (public) IPs are defined # Security Group 
 # configuration by itself is considered sufficient to protect access to the webserver.
-# Subnets are defined in the VPC module. 
-#
-# Redhat Ansible usage is enabled by the addition of VSI tags. All Ansible related VSI 
-# tags are prefixed with "ans_group:" followed by the group name.   '
-# tags = ["ans_group:backend"]'  
-# Correct specification of tags is essential for operation of the Ansible dynamic inventory
-# script used to pass host information to Ansible. The tags here should match the roles
-# defined in the site.yml playbook file. 
+# Public gateways are defined in the 'vpc' module. 
 ##############################################################################
 
-
-
-
-
-
+# Create VPC address prefix for frontend subnets
 resource "ibm_is_vpc_address_prefix" "frontend_subnet_prefix" {
   count = var.frontend_count
   name  = "${var.unique_id}-frontend-prefix-zone-${count.index + 1}"
@@ -25,19 +16,7 @@ resource "ibm_is_vpc_address_prefix" "frontend_subnet_prefix" {
   cidr  = var.frontend_cidr_blocks[count.index]
 }
 
-
-
-
-
-
-##############################################################################
-# Create Subnets
-##############################################################################
-
-
-
-
-# Increase count to create subnets in all zones
+# Create frontend subnets in all zones
 resource "ibm_is_subnet" "frontend_subnet" {
   count           = var.frontend_count
   name            = "${var.unique_id}-frontend-subnet-${count.index + 1}"
@@ -45,26 +24,20 @@ resource "ibm_is_subnet" "frontend_subnet" {
   zone            = "${var.ibm_region}-${count.index % 3 + 1}"
   ipv4_cidr_block = var.frontend_cidr_blocks[count.index]
   #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
-  # public_gateway = var.public_gateway_ids[count.index].id
+  public_gateway = var.public_gateway_ids[count.index].id
   depends_on     = [ibm_is_vpc_address_prefix.frontend_subnet_prefix]
 }
 
-
-
-
-
-
-# this is the SG applied to the frontend instances
+# Security group for frontend subnets and instances
 resource "ibm_is_security_group" "frontend" {
   name           = "${var.unique_id}-frontend-sg"
   vpc            = var.ibm_is_vpc_id
   resource_group = var.ibm_is_resource_group_id
 }
 
-
+# Define security group rules that we want to apply for frontend subnets
 locals {
   sg_keys = ["direction", "remote", "type", "port_min", "port_max"]
-
 
   sg_rules = [
     ["outbound", var.app_backend_sg_id, "tcp", 27017, 27017],
@@ -84,7 +57,7 @@ locals {
   ]
 }
 
-
+# Iteratively create security group rules for backend subnets and instances
 resource "ibm_is_security_group_rule" "frontend_access" {
   count     = length(local.sg_mappedrules)
   group     = ibm_is_security_group.frontend.id
@@ -128,4 +101,3 @@ resource "ibm_is_security_group_rule" "frontend_access" {
     }
   }
 }
-

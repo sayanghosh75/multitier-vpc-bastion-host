@@ -1,11 +1,16 @@
-variable "unique_id" {
-} # string added to the front for all created resources
+##############################################################################
+# Bastion subnet module input variables
+##############################################################################
 
-# create resources in this vpc id
+# Unique string added to the front of all created resource names
+variable "unique_id" {
+} 
+
+# Create resources in this vpc id
 variable "ibm_is_vpc_id" {
 }
 
-# create resources in this resource group id
+# Create resources in this resource group id
 variable "ibm_is_resource_group_id" {
 }
 
@@ -14,27 +19,24 @@ variable "ibm_region" {
   default     = "au-syd"
 }
 
-# # VSI compute profile for webserver host
-# variable "profile" {
-# }
+# Frontend CIDR blocks for each zone
+variable "frontend_cidr_blocks" {
+}
 
-# # Id of VSI image 
-# variable "ibm_is_image_id" {
-# }
+variable "frontend_count" {
+  description = "Number of front end zones"
+  default     = 1
+}
 
-# # SSH key for frontend webservers. 
-# variable "ibm_is_ssh_key_id" {
-# }
+# Public gateways to be attached to backend subnets
+variable "public_gateway_ids" {
+}
 
-# # webserver instance is put in this subnet
-# variable "subnet_ids" {
-# }
-
-# bastion sg requiring access to frontend security group
+# Bastion SG requiring access to frontend security group
 variable "bastion_remote_sg_id" {
 }
 
-# bastion subnet CIDR requiring access to frontend subnets 
+# Bastion subnet CIDR requiring access to frontend subnets - not sure this is needed
 variable "bastion_subnet_CIDR" {
 }
 
@@ -43,16 +45,4 @@ variable "app_backend_sg_id" {
 
 # Allowable CIDRs of public repos from which Ansible can deploy code
 variable "pub_repo_egress_cidr" {
-}
-
-variable "frontend_count" {
-  description = "number of front end zones"
-  default     = 1
-}
-
-# Public gateway IDs
-variable "public_gateway_ids" {
-}
-
-variable "frontend_cidr_blocks" {
 }

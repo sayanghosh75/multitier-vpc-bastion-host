@@ -8,8 +8,7 @@
 ##############################################################################
 
 
-
-# this is the SG applied to the bastion instance
+# Security group for bastion subnet and instances 
 resource "ibm_is_security_group" "bastion" {
   name           = "${var.unique_id}-bastion-sg"
   vpc            = var.ibm_is_vpc_id
@@ -37,8 +36,7 @@ locals {
     ["outbound", entry, "tcp", 22, 22]
   ]
 
-
-  #concatinate all sources of rules
+  # Concatenate all sources of rules
   sg_rules = concat(local.sg_sourcerules, local.sg_destrules, local.sg_baserules)
   sg_mappedrules = [
     for entry in local.sg_rules :
@@ -94,6 +92,3 @@ resource "ibm_is_security_group_rule" "bastion_access" {
     }
   }
 }
-
-
-

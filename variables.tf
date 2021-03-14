@@ -2,7 +2,7 @@
 # Account Variables
 ##############################################################################
 
-# target region
+# Target region
 variable "ibm_region" {
   description = "IBM Cloud region where all VPC resources will be deployed"
   default     = "au-syd"
@@ -15,26 +15,18 @@ variable "ibm_region" {
 #   description = "IBM Cloud API key when run standalone"
 # }
 
-
-
+# Resource group name
 variable "resource_group_name" {
   description = "Name of IBM Cloud resource group to be used for all VPC resources"
   default     = "VPC-admin"
 }
 
-# #Only tested with Gen2. Gen1 requires changes to images, profile names and some VPC resources 
-# variable "generation" {
-#   description = "VPC generation. Only tested with VPC Gen2"
-#   default     = 2
-# }
-
-# unique name for the VPC in the account 
+# Unique name for the VPC in the account 
 variable "vpc_name" {
   description = "Name of VPC"
   default     = "shallcrm-vpc"
 }
 
-##############################################################################
 
 ##############################################################################
 # Network variables
@@ -54,10 +46,11 @@ locals {
   pub_repo_egress_cidr = "0.0.0.0/0" # cidr range required to contact public software repositories 
 }
 
-# Predefine subnets for all app tiers for use with `ibm_is_address_prefix`. Single tier CIDR used for NACLs  
+# Predefine subnet IP address ranges for all app tiers for use with `ibm_is_address_prefix`.  
 # Each app tier uses: 
 # frontend_cidr_blocks = [cidrsubnet(var.frontend_cidr, 4, 0), cidrsubnet(var.frontend_cidr, 4, 2), cidrsubnet(var.frontend_cidr, 4, 4)]
 # to create individual zone subnets for use with `ibm_is_address_prefix`
+
 variable "bastion_cidr" {
   description = "Complete CIDR range across all three zones for bastion host subnets"
   default     = "172.16.0.0/20"
@@ -73,7 +66,6 @@ variable "backend_cidr" {
   default     = "172.18.0.0/20"
 }
 
-
 variable "bastion_count" {
   description = "Number of bastion zones"
   default     = 1
@@ -88,45 +80,3 @@ variable "backend_count" {
   description = "Number of back end zones"
   default     = 1
 }
-
-
-# ##############################################################################
-
-# # VSI profile
-# variable "profile" {
-#   description = "Profile for VSIs deployed in frontend and backend"
-#   default     = "cx2-2x4"
-# }
-
-# # image names can be determined with the cli command `ibmcloud is images`
-# variable "image_name" {
-#   description = "OS image for VSI deployments. Only tested with Centos"
-#   default     = "ibm-centos-7-6-minimal-amd64-2"
-# }
-
-# data "ibm_is_image" "os" {
-#   name = var.image_name
-# }
-
-
-# ##############################################################################
-# # Access check variables
-# ##############################################################################
-
-# variable "ssh_accesscheck" {
-#   description = "Flag to request remote-exec validation of SSH access, true/false"
-#   default     = false
-# }
-
-# variable "ssh_private_key" {
-#   description = "SSH private key of SSH key pair used for VSIs and Bastion"
-# }
-
-# data "ibm_is_ssh_key" "sshkey" {
-#   name = var.ssh_key_name
-# }
-
-# variable "ssh_key_name" {
-#   description = "Name given to public SSH key uploaded to IBM Cloud for VSI access"
-# }
-
