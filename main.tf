@@ -12,9 +12,9 @@ data "ibm_resource_group" "all_rg" {
 
 locals {
   generation     = 2
-  bastion_count  = 1
-  frontend_count = 1
-  backend_count  = 1
+  # bastion_count  = 1
+  # frontend_count = 1
+  # backend_count  = 1
 }
 
 
@@ -46,11 +46,11 @@ module "vpc" {
   resource_group_name  = var.resource_group_name
   generation           = local.generation
   unique_id            = var.vpc_name
-  bastion_count        = local.bastion_count
+  bastion_count        = var.bastion_count
   bastion_cidr_blocks  = local.bastion_cidr_blocks
-  frontend_count       = local.frontend_count
+  frontend_count       = var.frontend_count
   frontend_cidr_blocks = local.frontend_cidr_blocks
-  backend_count        = local.backend_count
+  backend_count        = var.backend_count
   backend_cidr_blocks  = local.backend_cidr_blocks
 }
 

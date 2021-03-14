@@ -19,7 +19,7 @@ variable "ibm_region" {
 
 variable "resource_group_name" {
   description = "Name of IBM Cloud resource group to be used for all VPC resources"
-  default     = "Default"
+  default     = "VPC-Admin"
 }
 
 # #Only tested with Gen2. Gen1 requires changes to images, profile names and some VPC resources 
@@ -72,6 +72,25 @@ variable "backend_cidr" {
   description = "Complete CIDR range across all three zones for backend subnets"
   default     = "172.18.0.0/20"
 }
+
+
+variable "bastion_count" {
+  description = "Number of bastion zones"
+  default     = 1
+}
+
+variable "frontend_count" {
+  description = "Number of front end zones (and public gateways)"
+  default     = 1
+}
+
+variable "backend_count" {
+  description = "Number of back end zones"
+  default     = 1
+}
+
+
+
 
 
 # ##############################################################################
