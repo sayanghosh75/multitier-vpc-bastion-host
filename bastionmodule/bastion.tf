@@ -20,6 +20,7 @@ resource "ibm_is_floating_ip" "bastion" {
   count  = var.bastion_count
   name   = "${var.unique_id}-float-bastion-ip-${count.index + 1}"
   zone   = "${var.ibm_region}-${count.index % 3 + 1}"
+  resource_group  = var.ibm_is_resource_group_id
 }
 
 # Create VPC address prefix for bastion subnets
