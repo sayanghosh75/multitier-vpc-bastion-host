@@ -65,7 +65,7 @@ locals {
 module "bastion" {
   source                   = "./bastionmodule"
   ibm_region               = var.ibm_region
-  bastion_count            = local.bastion_count
+  bastion_count            = var.bastion_count
   unique_id                = var.vpc_name
   ibm_is_vpc_id            = module.vpc.vpc_id
   ibm_is_resource_group_id = data.ibm_resource_group.all_rg.id
@@ -84,7 +84,7 @@ module "frontend" {
   unique_id                = var.vpc_name
   ibm_is_vpc_id            = module.vpc.vpc_id
   ibm_is_resource_group_id = data.ibm_resource_group.all_rg.id
-  frontend_count           = local.frontend_count
+  frontend_count           = var.frontend_count
   # subnet_ids               = module.vpc.frontend_subnet_ids
   frontend_cidr_blocks     = local.frontend_cidr_blocks
   public_gateway_ids       = module.vpc.public_gateway_ids
@@ -100,7 +100,7 @@ module "backend" {
   unique_id                = var.vpc_name
   ibm_is_vpc_id            = module.vpc.vpc_id
   ibm_is_resource_group_id = data.ibm_resource_group.all_rg.id
-  backend_count            = local.backend_count
+  backend_count            = var.backend_count
   # subnet_ids               = module.vpc.backend_subnet_ids
   backend_cidr_blocks      = local.backend_cidr_blocks
   public_gateway_ids       = module.vpc.public_gateway_ids
