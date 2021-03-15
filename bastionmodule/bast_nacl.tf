@@ -13,11 +13,13 @@
 locals {
   destinboundrules = [
     for entry in var.destination_cidr_blocks :
-    ["allow", entry, "0.0.0.0/0", "inbound", "tcp", 22, 22, 1024, 65535]
+    ["allow", entry, "0.0.0.0/0", "inbound", "tcp", 22, 22, 1024, 65535],
+    ["allow", entry, "0.0.0.0/0", "inbound", "icmp", 8, 0, 8, 0]
   ]
   destoutboundrules = [
     for entry in var.destination_cidr_blocks :
-    ["allow", "0.0.0.0/0", entry, "outbound", "tcp", 1024, 65535, 22, 22]
+    ["allow", "0.0.0.0/0", entry, "outbound", "tcp", 1024, 65535, 22, 22],
+    ["allow", "0.0.0.0/0", entry, "outbound", "icmp", 8, 0, 8, 0]    
   ]
   destrules = concat(local.destinboundrules, local.destoutboundrules)
 
@@ -48,8 +50,10 @@ locals {
   # note deny rules explicitly defined as tcp/udp as 'all' not supported when this was written
   baserules = [
     ["allow", "161.26.0.0/16", "0.0.0.0/0", "inbound", "tcp", 80, 80, 1024, 65535],
+    ["allow", "161.26.0.0/16", "0.0.0.0/0", "inbound", "tcp", 443, 443, 1024, 65535],
     ["allow", "161.26.0.0/16", "0.0.0.0/0", "inbound", "udp", 53, 53, 1024, 65535],
     ["allow", "0.0.0.0/0", "161.26.0.0/16", "outbound", "tcp", 1024, 65535, 80, 80],
+    ["allow", "0.0.0.0/0", "161.26.0.0/16", "outbound", "tcp", 1024, 65535, 443, 443],
     ["allow", "0.0.0.0/0", "161.26.0.0/16", "outbound", "udp", 1024, 65535, 53, 53],
     #["allow", "166.9.0.0/16", "0.0.0.0/0", "inbound", "tcp", 1, 65535, 1024, 65535],
     #["allow", "0.0.0.0/0", "166.9.0.0/16", "outbound", "tcp", 1024, 65535, 1, 65535],
