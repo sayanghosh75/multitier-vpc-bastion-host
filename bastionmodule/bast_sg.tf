@@ -34,7 +34,7 @@ locals {
   sg_destrules = [
     for entry in var.destination_sgs :
     ["outbound", entry, "tcp", 22, 22],
-    ["outbound", entry, "icmp", 8, 0]
+    ["outbound", entry, "icmp", 8, 0],
   ]
 
   # Concatenate all sources of rules
