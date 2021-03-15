@@ -13,13 +13,11 @@
 locals {
   destinboundrules = [
     for entry in var.destination_cidr_blocks :
-    ["allow", entry, "0.0.0.0/0", "inbound", "tcp", 22, 22, 1024, 65535],
-    ["allow", entry, "0.0.0.0/0", "inbound", "icmp", 8, 0, 8, 0],
+    ["allow", entry, "0.0.0.0/0", "inbound", "tcp", 22, 22, 1024, 65535]
   ]
   destoutboundrules = [
     for entry in var.destination_cidr_blocks :
-    ["allow", "0.0.0.0/0", entry, "outbound", "tcp", 1024, 65535, 22, 22],
-    ["allow", "0.0.0.0/0", entry, "outbound", "icmp", 8, 0, 8, 0],
+    ["allow", "0.0.0.0/0", entry, "outbound", "tcp", 1024, 65535, 22, 22]
   ]
   destrules = concat(local.destinboundrules, local.destoutboundrules)
 
