@@ -49,7 +49,7 @@ locals {
 
     ["outbound", var.pub_repo_egress_cidr, "tcp", 80, 80],
     ["outbound", var.pub_repo_egress_cidr, "tcp", 443, 443],
-    ["inbound", "0.0.0.0/0", "tcp", 8080, 8080]
+    ["inbound", "0.0.0.0/0", "tcp", 80, 80]
   ]
 
   sg_mappedrules = [
