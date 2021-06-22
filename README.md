@@ -1,5 +1,9 @@
 # Example VPC with SSH access and Bastion Host for Redhat Ansible
 
+NOTE: This README has not been updated since copying from the 
+IBM Cloud Tutorials source
+
+
 This Terraform example for IBM Cloud Schematics illustrates how to
 deploy an IBM Cloud Gen2 VPC with a bastion host to provide secure
 remote SSH access. The intended usage is for remote software
