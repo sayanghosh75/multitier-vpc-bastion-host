@@ -11,9 +11,10 @@ variable "ibm_region" {
   # default     = "eu-gb"
 }
 
-# variable "ibmcloud_api_key" {
-#   description = "IBM Cloud API key when run standalone"
-# }
+variable "ibmcloud_api_key" {
+#  description = "IBM Cloud API Key"
+#  default = ""
+}
 
 # Resource group name
 variable "resource_group_name" {
@@ -24,7 +25,7 @@ variable "resource_group_name" {
 # Unique name for the VPC in the account 
 variable "vpc_name" {
   description = "Name of VPC"
-  default     = "shallcrm-vpc"
+  default     = "sayan-tf-vpc"
 }
 
 
