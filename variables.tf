@@ -11,10 +11,11 @@ variable "ibm_region" {
   # default     = "eu-gb"
 }
 
-variable "ibmcloud_api_key" {
+# Update only in standalone mode
+#variable "ibmcloud_api_key" {
 #  description = "IBM Cloud API Key"
 #  default = ""
-}
+#}
 
 # Resource group name
 variable "resource_group_name" {
