@@ -12,10 +12,10 @@ variable "ibm_region" {
 }
 
 # Update only in standalone mode
-$variable "ibmcloud_api_key" {
+#variable "ibmcloud_api_key" {
 #  description = "IBM Cloud API Key"
 #  default = ""
-$}
+#}
 
 # Resource group name
 variable "resource_group_name" {
