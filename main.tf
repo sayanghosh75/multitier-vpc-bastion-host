@@ -3,6 +3,7 @@
 ##############################################################################
 
 # Provider block required with Schematics to set VPC region
+# Uncomment ibmcloud_api_key only in standalone mode
 provider "ibm" {
   region = var.ibm_region
 #  ibmcloud_api_key = var.ibmcloud_api_key         
